@@ -13,17 +13,20 @@ public class User {
     private String email;
     private String name;
     private String password;
-    public User(Long id, String email, String name, String password) {
+    private Boolean admin;
+    public User(Long id,  String name, String email, String password, Boolean admin) {
         this.id = id;
-        this.email = email;
         this.name = name;
+        this.email = email;
         this.password = password;
+        this.admin = admin;
     }
 
-    public User(String email, String name, String password) {
-        this.email = email;
+    public User(String name, String email,  String password, Boolean admin) {
         this.name = name;
+        this.email = email;
         this.password = password;
+        this.admin = admin;
     }
 
     public User() {
@@ -60,5 +63,13 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Boolean getAdmin() {
+        return admin;
+    }
+
+    public void setAdmin(Boolean admin) {
+        this.admin = admin;
     }
 }
