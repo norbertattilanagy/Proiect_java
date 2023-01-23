@@ -12,6 +12,9 @@
 <body>
 <jsp:include page="element/Navbar.jsp"></jsp:include>
 <div class="mt-3 mx-5">
+    <div class="mt-3">
+        <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#Delete_note"><i class="bi bi-trash -fill me-2"></i>Sterge nota</button>
+    </div>
     <form action="add_note_submit" method="post">
         <div class="mt-3">
             <label for="title" class="form-label"><b>Titlu:</b></label>
@@ -33,6 +36,35 @@
         </div>
     </form>
 </div>
+
+<!--Modal--Delete-account--->
+<div class="modal fade" id="Delete_note">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Șterge Notă</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" data-bs-target="#Delete_note"></button>
+            </div>
+            <!-- Modal body -->
+            <div class="modal-body">
+                <div class="d-flex justify-content-center">
+                    <p>Sunteși sigur că vreți să ștergeți nota?</p>
+                </div>
+                <div class="d-flex justify-content-around">
+                    <div class="d-grid gap-1 col-4">
+                        <a href="delete_account" class="btn btn-danger">Da</a>
+                    </div>
+                    <div class="d-grid gap-1 col-4">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" data-bs-target="#Delete_note">Nu</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
 </body>
 </html>
 <script type="text/javascript">

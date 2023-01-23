@@ -9,7 +9,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
-    long deleteByIdAllIgnoreCase(Long id);
     @Transactional
     @Modifying
     @Query("update User u set u.password = ?1 where u.id = ?2")

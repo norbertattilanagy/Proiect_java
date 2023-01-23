@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 public class UserControler {
 
     @Autowired
-    UserServices userServices;
+    UserServices userS;
 
 
     @GetMapping("/sign_in")
@@ -26,7 +26,7 @@ public class UserControler {
         String email = request.getParameter("email");
         String password = request.getParameter("password");
 
-        VarStore.allUsers = userServices.getAll();
+        VarStore.allUsers = userS.getAll();
         for (int i = 0; i < VarStore.allUsers.size(); i++) {
             if (email.equals(VarStore.allUsers.get(i).getEmail()) && password.equals(VarStore.allUsers.get(i).getPassword())) {
                 VarStore.userId = VarStore.allUsers.get(i).getId();
@@ -51,7 +51,7 @@ public class UserControler {
         String email = request.getParameter("email");
         String password = request.getParameter("password1");
 
-        VarStore.userId = userServices.save(new User(name, email, password,false));
+        VarStore.userId = userS.save(new User(name, email, password,false));
         VarStore.userAdmin = false;
 
         return "redirect:/";
@@ -81,8 +81,8 @@ public class UserControler {
 
         String name = request.getParameter("name");
         String email = request.getParameter("email");
-        userServices.updateDate(VarStore.userId,name,email);
-        VarStore.allUsers = userServices.getAll();
+        userS.updateDate(VarStore.userId,name,email);
+        VarStore.allUsers = userS.getAll();
 
         return "redirect:/my_account";
     }
@@ -93,15 +93,15 @@ public class UserControler {
             return "redirect:sign_in";
 
         String password = request.getParameter("new_password1");
-        userServices.updatePassword(VarStore.userId,password);
-        VarStore.allUsers = userServices.getAll();
+        userS.updatePassword(VarStore.userId,password);
+        VarStore.allUsers = userS.getAll();
 
         return "redirect:/my_account";
     }
 
     @GetMapping("/delete_account")
     public String delete_account(){
-        userServices.deleteUser(VarStore.userId);
+        userS.deleteUser(VarStore.userId);
         return "redirect:sign_in";
     }
 

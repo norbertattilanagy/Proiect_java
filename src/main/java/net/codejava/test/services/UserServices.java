@@ -3,9 +3,6 @@ package net.codejava.test.services;
 import net.codejava.test.model.User;
 import net.codejava.test.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.Modifying;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -37,4 +34,5 @@ public class UserServices {
     public void deleteUser(Long id){
         userRepository.deleteById(id);
     }
+
 }

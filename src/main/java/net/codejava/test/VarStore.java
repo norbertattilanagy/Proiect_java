@@ -12,4 +12,5 @@ public class VarStore {
     public static List<User> allUsers;
     public static int myUserIndex;
     public static String userSearch = "";
+    public static Long noteId;
 }
