@@ -20,7 +20,7 @@
 </head>
 <body>
 <jsp:include page="element/Navbar.jsp"></jsp:include>
-<div class="mx-3">
+<div class="mx-3 mt-3">
     <form action="search_users" method="post">
         <div class="input-group">
             <input class="form-control me-2" id="search" name="search" type="search" placeholder="Cautare"
@@ -29,7 +29,7 @@
             </button>
         </div>
     </form>
-    <table class="table">
+    <table class="table mt-3">
         <thead>
         <tr>
             <th scope="col">No.</th>

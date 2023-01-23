@@ -33,4 +33,8 @@ public class UserServices {
     public void updateAdmin(Long id,Boolean admin){
         userRepository.updateAdminById(admin, id);
     }
+
+    public void deleteUser(Long id){
+        userRepository.deleteById(id);
+    }
 }

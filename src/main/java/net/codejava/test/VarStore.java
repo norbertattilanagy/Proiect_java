@@ -8,8 +8,8 @@ public class VarStore {
 
     public static Boolean incorectSignIn = true;
     public static Long userId = Long.valueOf(-1);
-    public static Boolean userAdmin = true;
+    public static Boolean userAdmin;
     public static List<User> allUsers;
     public static int myUserIndex;
-    public static String userSearch;
+    public static String userSearch = "";
 }

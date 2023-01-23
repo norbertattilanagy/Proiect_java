@@ -82,6 +82,8 @@ public class UserControler {
         String name = request.getParameter("name");
         String email = request.getParameter("email");
         userServices.updateDate(VarStore.userId,name,email);
+        VarStore.allUsers = userServices.getAll();
+
         return "redirect:/my_account";
     }
 
@@ -92,6 +94,22 @@ public class UserControler {
 
         String password = request.getParameter("new_password1");
         userServices.updatePassword(VarStore.userId,password);
+        VarStore.allUsers = userServices.getAll();
+
         return "redirect:/my_account";
+    }
+
+    @GetMapping("/delete_account")
+    public String delete_account(){
+        userServices.deleteUser(VarStore.userId);
+        return "redirect:sign_in";
+    }
+
+    @GetMapping("/log_out")
+    public String log_out(){
+        VarStore.userId= Long.valueOf(-1);
+        VarStore.userAdmin = false;
+        VarStore.allUsers.clear();
+        return "redirect:sign_in";
     }
 }

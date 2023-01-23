@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
+    long deleteByIdAllIgnoreCase(Long id);
     @Transactional
     @Modifying
     @Query("update User u set u.password = ?1 where u.id = ?2")
@@ -21,4 +22,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Modifying
     @Query("update User u set u.admin = ?1 where u.id = ?2")
     int updateAdminById(Boolean admin, Long id);
+
+    @Override
+    void deleteById(Long aLong);
 }

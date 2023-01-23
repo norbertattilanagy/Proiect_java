@@ -18,7 +18,7 @@
                     <a class="nav-link" aria-current="page" href="my_account">Contul meul</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" aria-current="page" href="#">Deconectare</a>
+                    <a class="nav-link" aria-current="page" href="log_out">Deconectare</a>
                 </li>
             </ul>
         </div>

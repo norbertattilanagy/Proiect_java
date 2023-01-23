@@ -7,23 +7,26 @@
     <title>Utilizatori</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
-    <script src="assets\js\bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
     <jsp:include page="element/Navbar.jsp"></jsp:include>
-    <div class="card" style="width: 60%; margin: auto;">
-        <div class="card-body">
-            <h3 class="card-title">Informatii cont</h3>
-            <h5><b>Nume:</b> <%=VarStore.allUsers.get(VarStore.myUserIndex).getName()%></h5>
-            <h5><b>Email:</b> <%=VarStore.allUsers.get(VarStore.myUserIndex).getEmail()%></h5>
-            <div class="d-grid mt-3">
-                <button type="button" class="btn btn-primary btn-block" data-bs-toggle="modal" data-bs-target="#Edit_profile_data">Editeză datele</button>
-            </div>
-            <div class="d-grid mt-3">
-                <button type="button" class="btn btn-primary btn-block" data-bs-toggle="modal" data-bs-target="#Change_password">Schimbă parola</button>
-            </div>
-            <div class="d-grid mt-3">
-                <button type="button" class="btn btn-danger btn-block" data-bs-toggle="modal" data-bs-target="#Delete_account">Șterge contul</button>
+    <div class="mt-5" style="width: 70%; margin: auto;">
+        <h2>Informatii cont</h2>
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Date personale</h4>
+                <h5><b>Nume:</b> <%=VarStore.allUsers.get(VarStore.myUserIndex).getName()%></h5>
+                <h5><b >Email:</b> <%=VarStore.allUsers.get(VarStore.myUserIndex).getEmail()%></h5>
+                <div class="d-grid mt-3">
+                    <button type="button" class="btn btn-dark btn-block" data-bs-toggle="modal" data-bs-target="#Edit_profile_data">Editeză datele</button>
+                </div>
+                <div class="d-grid mt-3">
+                    <button type="button" class="btn btn-dark btn-block" data-bs-toggle="modal" data-bs-target="#Change_password">Schimbă parola</button>
+                </div>
+                <div class="d-grid mt-3">
+                    <button type="button" class="btn btn-danger btn-block" data-bs-toggle="modal" data-bs-target="#Delete_account">Șterge contul</button>
+                </div>
             </div>
         </div>
     </div>
@@ -95,7 +98,35 @@
         </div>
     </div>
 
+    <!--Modal--Delete-account--->
+    <div class="modal fade" id="Delete_account">
+        <div class="modal-dialog">
+            <div class="modal-content">
 
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Șterge contul</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" data-bs-target="#Delete_account"></button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <div class="d-flex justify-content-center">
+                        <p>Sunteși sigur că vreți să ștergeți contul?</p>
+                    </div>
+                    <div class="d-flex justify-content-around">
+                        <div class="d-grid gap-1 col-4">
+                            <a href="delete_account" class="btn btn-danger">Da</a>
+                        </div>
+                        <div class="d-grid gap-1 col-4">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" data-bs-target="#Delete_lesson_group">Nu</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
 
 </body>
 </html>

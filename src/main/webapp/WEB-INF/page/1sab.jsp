@@ -11,7 +11,7 @@
 <body>
     <jsp:include page="element/Navbar.jsp"></jsp:include>
     <div class="mt-3 mx-5">
-        <a href="add_note" class="btn btn-dark" role="button"><i class="bi bi-plus-circle me-2"></i>Nota noua</a>
+        <a href="add_note"></a>
 
     </div>
 </body>
