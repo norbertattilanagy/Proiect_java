@@ -18,4 +18,5 @@ public class VarStore {
     public static List<Note> allNote;
     public static int noteIndex;
     public static List<CheckOption> checkOptions;
+    public static Boolean editNote;
 }

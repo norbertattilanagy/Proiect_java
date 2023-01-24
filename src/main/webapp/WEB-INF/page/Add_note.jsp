@@ -1,3 +1,4 @@
+<%@ page import="net.codejava.test.VarStore" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -12,22 +13,45 @@
 <body>
 <jsp:include page="element/Navbar.jsp"></jsp:include>
 <div class="mt-3 mx-5">
-    <div class="mt-3">
-        <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#Delete_note"><i class="bi bi-trash -fill me-2"></i>Sterge nota</button>
-    </div>
-    <form action="add_note_submit" method="post">
+    <% if(VarStore.editNote){ %>
+        <div class="mt-3">
+            <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#Delete_note"><i class="bi bi-trash -fill me-2"></i>Sterge nota</button>
+        </div>
+    <% }
+        String title="";
+        String content="";
+        String link = "add_note_submit";
+        if(VarStore.editNote){
+            title = VarStore.allNote.get(VarStore.noteIndex).getTitle();
+            content = VarStore.allNote.get(VarStore.noteIndex).getContent();
+            link = "edit_note_submit";
+            System.out.println(content);
+        } %>
+    <form action="<%=link%>" method="post">
         <div class="mt-3">
             <label for="title" class="form-label"><b>Titlu:</b></label>
-            <input type="text" class="form-control" id="title" name="title" value="">
+            <input type="text" class="form-control" id="title" name="title" value="<%=title%>">
         </div>
         <div class="mt-3">
             <label for="content" class="form-label"><b>Continut:</b></label>
-            <textarea class="form-control" id="content" name="content" value="" rows="5"></textarea>
+            <textarea class="form-control" id="content" name="content" rows="5"><%=content%></textarea>
         </div>
         <div class="mt-3">
             <button class="btn btn btn-outline-dark add_checklist "><i class="bi bi-ui-checks me-2"></i>Caseta de selectare</button>
         </div>
-        <div class="input_fields mt-3"></div>
+        <div class="input_fields mt-3">
+            <% if(VarStore.editNote){
+                for(int i=0;i<VarStore.checkOptions.size();i++){ %>
+            <div class="input-group mt-3">
+                <input type="text" class="form-control" id="option" name="option[]" value="<%=VarStore.checkOptions.get(i).getOption()%>"/>
+                <span class="input-group-text remove_field">
+                    <a href="#" class="link-dark">
+                        <i class="bi bi-dash-circle"></i>
+                    </a>
+                </span>
+            </div>
+            <% } } %>
+        </div>
         <div class="mt-3">
             <button class="btn btn-outline-dark add_field_button"><i class="bi bi-plus-circle me-2"></i>Adaugă opțiune</button>
         </div>
@@ -69,13 +93,16 @@
 </html>
 <script type="text/javascript">
     $(document).ready(function() {
-        var x=0;
+        var x=<%=VarStore.checkOptions.size()%>;
         var min_fields=1;
         var wrapper=$(".input_fields");
         var add_button=$(".add_field_button");
         var add_checklist=$(".add_checklist");
 
-        $(add_button).hide();
+        if (x==0)
+            $(add_button).hide();
+        else
+            $(add_checklist).hide();
 
         $(add_checklist).click(function(e){
             e.preventDefault();
@@ -84,7 +111,7 @@
             x++;
             $(wrapper).append('<div class="input-group mt-3"><input type="text" class="form-control" id="option"' +
                 ' name="option[]" value=""/><span class="input-group-text remove_field">' +
-                '<a href="#" class="link-dark"><i class="bi bi-dash-circle"></i></a></span></div>');
+                '<a href="" class="link-dark"><i class="bi bi-dash-circle"></i></a></span></div>');
             $(add_button).show();
         });
 
@@ -93,7 +120,7 @@
             x++;
             $(wrapper).append('<div class="input-group mt-3"><input type="text" class="form-control" id="option"' +
                 ' name="option[]" value=""/><span class="input-group-text remove_field">' +
-                '<a href="#" class="link-dark"><i class="bi bi-dash-circle"></i></a></span></div>');
+                '<a href="" class="link-dark"><i class="bi bi-dash-circle"></i></a></span></div>');
         });
 
         $(wrapper).on("click",".remove_field", function(e){ //user click on remove text

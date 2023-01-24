@@ -16,10 +16,10 @@
 <jsp:include page="element/Navbar.jsp"></jsp:include>
 <div class="mt-3 mx-5">
     <div class="my-3">
-        <a href="" class="btn btn-outline-secondary btn-sm">Editeaza</a>
+        <a href="edit_note" class="btn btn-outline-secondary btn-sm">Editeaza</a>
     </div>
     <h4><%=VarStore.allNote.get(VarStore.noteIndex).getTitle()%></h4>
-    <p><%=VarStore.allNote.get(VarStore.noteIndex).getContent()%></p>
+    <p style="white-space: pre-wrap;"><%=VarStore.allNote.get(VarStore.noteIndex).getContent()%></p>
     <form action="submit_note_checkbox" id="checkform" name="checkform" method="post">
         <div class="ms-3">
             <% for(int i=0;i<VarStore.checkOptions.size();i++){ %>

@@ -26,4 +26,8 @@ public class CheckOptionServices {
     public void updateCheckedById(Long id,Boolean check){
         checkOptionRepository.updateCheckedById(check,id);
     }
+
+    public void deleteById(Long id){
+        checkOptionRepository.deleteById(id);
+    }
 }

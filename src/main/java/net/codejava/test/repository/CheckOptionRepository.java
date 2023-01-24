@@ -17,4 +17,7 @@ public interface CheckOptionRepository extends JpaRepository<CheckOption, Long> 
     int updateCheckedById(Boolean checked, Long id);
 
     List<CheckOption> findByNoteId(Long noteId);
+
+    @Override
+    void deleteById(Long aLong);
 }

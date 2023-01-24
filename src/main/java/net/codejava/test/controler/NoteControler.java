@@ -29,6 +29,7 @@ public class NoteControler {
     public String add_note() {
         if (VarStore.userId == -1)
             return "redirect:sign_in";
+        VarStore.editNote = false;
         return "Add_note";
     }
 
@@ -53,7 +54,8 @@ public class NoteControler {
             return "redirect:/sign_in";
 
         VarStore.noteIndex = index;
-        VarStore.checkOptions = optionS.selectByNoteId(VarStore.allNote.get(VarStore.noteIndex).getId());
+        VarStore.noteId = VarStore.allNote.get(VarStore.noteIndex).getId();
+        VarStore.checkOptions = optionS.selectByNoteId(VarStore.noteId);
 
         return "redirect:/note";
     }
@@ -62,7 +64,6 @@ public class NoteControler {
     public String note() {
         if (VarStore.userId == -1)
             return "redirect:/sign_in";
-
         return "View_note";
     }
 
@@ -89,5 +90,47 @@ public class NoteControler {
             }
         }
         return "redirect:/";
+    }
+
+    @GetMapping("/edit_note")
+    public String edit_note() {
+        if (VarStore.userId == -1)
+            return "redirect:sign_in";
+        VarStore.editNote = true;
+        return "Add_note";
+    }
+
+    @PostMapping("/edit_note_submit")
+    public String edit_note_submit(HttpServletRequest request, @RequestParam("option[]") List<String> option) {
+        if (VarStore.userId == -1)
+            return "redirect:sign_in";
+
+        String title = request.getParameter("title");
+        String content = request.getParameter("content");
+
+        noteS.updateById(VarStore.noteId,title,content);
+
+        for(int i=0;i<VarStore.checkOptions.size();i++) {
+            Boolean delete = true;
+            for (int j = 0; j < option.size(); j++) {
+                if (option.get(j).equals(VarStore.checkOptions.get(i).getOption()))
+                    delete = false;
+            }
+            if (delete)
+                optionS.deleteById(VarStore.checkOptions.get(i).getId());
+        }
+
+        for (int j = 0; j < option.size(); j++) {
+            Boolean insert = true;
+            for(int i=0;i<VarStore.checkOptions.size();i++) {
+                if (option.get(j).equals(VarStore.checkOptions.get(i).getOption()))
+                    insert=false;
+            }
+            if (insert)
+                optionS.save(new CheckOption(VarStore.noteId,option.get(j),false));
+        }
+        VarStore.allNote = noteS.getAll();
+        VarStore.checkOptions = optionS.selectByNoteId(VarStore.noteId);
+        return "redirect:/note";
     }
 }

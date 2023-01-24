@@ -26,17 +26,18 @@
         <div class="row">
             <% for(int i=0;i< VarStore.allNote.size();i++){ %>
                 <% String link = "note/" + i; %>
-                <div class="col-md-6 mt-3">
+                <div class="col-md-4 mt-3">
                     <a href=<%=link%>>
                         <div class="card" >
                             <div class="card-header">
                                 <%=VarStore.allNote.get(i).getTitle()%>
                             </div>
                             <div class="card-body">
-                                <% if (VarStore.allNote.get(i).getContent().length()>20) { %>
+                                <% System.out.println(VarStore.allNote.get(i).getContent().length());
+                                    if (VarStore.allNote.get(i).getContent().length()<=35) { %>
                                     <p class="card-text"><%=VarStore.allNote.get(i).getContent()%></p>
                                 <% } else { %>
-                                    <p class="card-text"><%=VarStore.allNote.get(i).getContent().substring(0,18) + "..."%></p>
+                                    <p class="card-text"><%=VarStore.allNote.get(i).getContent().substring(0,33) + "..."%></p>
                                 <% } %>
                             </div>
                         </div>

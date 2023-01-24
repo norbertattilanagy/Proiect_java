@@ -21,4 +21,8 @@ public class NoteServices {
         noteRepository.save(note);
         return note.getId();
     }
+
+    public void updateById(Long id,String title, String content){
+        noteRepository.updateTitleAndContentById(title,content,id);
+    }
 }
