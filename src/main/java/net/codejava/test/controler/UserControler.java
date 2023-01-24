@@ -7,6 +7,7 @@ import net.codejava.test.services.UserServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
@@ -14,9 +15,7 @@ public class UserControler {
 
     @Autowired
     UserServices userS;
-
-
-    @GetMapping("/sign_in")
+        @GetMapping("/sign_in")
     public String sign_in() {
         return "Sign_in";
     }
@@ -111,5 +110,20 @@ public class UserControler {
         VarStore.userAdmin = false;
         VarStore.allUsers.clear();
         return "redirect:sign_in";
+    }
+
+    @GetMapping("/admin_user/{id}")
+    public String note_id(@PathVariable("id") int index) {
+        if (VarStore.userId == -1)
+            return "redirect:/sign_in";
+
+        Long userId = VarStore.allUsers.get(index).getId();
+        if(VarStore.allUsers.get(index).getAdmin())
+            userS.updateAdmin(userId,false);
+        else
+            userS.updateAdmin(userId,true);
+
+        VarStore.allUsers = userS.getAll();
+        return "redirect:/users";
     }
 }
