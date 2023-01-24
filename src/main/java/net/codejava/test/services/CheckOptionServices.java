@@ -18,4 +18,12 @@ public class CheckOptionServices {
         checkOptionRepository.save(checkOption);
         return checkOption.getId();
     }
+
+    public List<CheckOption> selectByNoteId(Long noteId){
+        return checkOptionRepository.findByNoteId(noteId);
+    }
+
+    public void updateCheckedById(Long id,Boolean check){
+        checkOptionRepository.updateCheckedById(check,id);
+    }
 }

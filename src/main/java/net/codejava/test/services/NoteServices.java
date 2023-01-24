@@ -6,13 +6,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class NoteServices {
     @Autowired
     private NoteRepository noteRepository;
 
-    private List<Note> getAll(){ return noteRepository.findAll(); }
+    public List<Note> getAll(){ return noteRepository.findAll(); }
+
+    public Optional<Note> FindById(Long id){ return noteRepository.findById(id); }
 
     public long save(Note note){
         noteRepository.save(note);

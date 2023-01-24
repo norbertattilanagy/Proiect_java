@@ -1,5 +1,7 @@
 package net.codejava.test;
 
+import net.codejava.test.model.CheckOption;
+import net.codejava.test.model.Note;
 import net.codejava.test.model.User;
 
 import java.util.List;
@@ -13,4 +15,7 @@ public class VarStore {
     public static int myUserIndex;
     public static String userSearch = "";
     public static Long noteId;
+    public static List<Note> allNote;
+    public static int noteIndex;
+    public static List<CheckOption> checkOptions;
 }
