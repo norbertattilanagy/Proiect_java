@@ -1,6 +1,7 @@
 package net.codejava.test.controler;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import net.codejava.test.VarStore;
 import net.codejava.test.model.CheckOption;
 import net.codejava.test.model.Note;
@@ -24,51 +25,51 @@ public class NoteControler {
     CheckOptionServices optionS;
 
     @GetMapping("/add_note")
-    public String add_note() {
-        if (VarStore.userId == -1)
-            return "redirect:sign_in";
-        VarStore.editNote = false;
+    public String add_note(HttpSession session) {
+        if (session.getAttribute("userId").equals(-1))
+           return "redirect:/sign_in";
+        session.setAttribute("editNote",false);
         return "Add_note";
     }
 
     @PostMapping("/add_note_submit")
-    public String add_note_submit(HttpServletRequest request, @RequestParam("option[]") List<String> option) {
-        if (VarStore.userId == -1)
-            return "redirect:sign_in";
+    public String add_note_submit(HttpServletRequest request, @RequestParam("option[]") List<String> option,HttpSession session) {
+       if (!VarStore.verifySessionExist(request))
+           return "redirect:/sign_in";
 
         String title = request.getParameter("title");
         String content = request.getParameter("content");
 
-        VarStore.noteId = noteS.save(new Note(VarStore.userId,title,content));
+        session.setAttribute("noteId",noteS.save(new Note((Long) session.getAttribute("userId"),title,content)));
         for(int i=0;i<option.size();i++){
-            optionS.save(new CheckOption(VarStore.noteId,option.get(i),false));
+            optionS.save(new CheckOption((Long) session.getAttribute("noteId"),option.get(i),false));
         }
-        return "redirect:/";
+        return "redirect:/home";
     }
 
     @GetMapping("/note/{id}")
-    public String note_id(@PathVariable("id") int index) {
-        if (VarStore.userId == -1)
-            return "redirect:/sign_in";
+    public String note_id(@PathVariable("id") int index,HttpServletRequest request,HttpSession session) {
+       if (!VarStore.verifySessionExist(request))
+           return "redirect:/sign_in";
 
-        VarStore.noteIndex = index;
-        VarStore.noteId = VarStore.allNote.get(VarStore.noteIndex).getId();
-        VarStore.checkOptions = optionS.selectByNoteId(VarStore.noteId);
+        session.setAttribute("noteIndex",index);
+        session.setAttribute("noteId",VarStore.allNote.get((Integer) session.getAttribute("noteIndex")).getId());
+        VarStore.checkOptions = optionS.selectByNoteId((Long) session.getAttribute("noteId"));
 
         return "redirect:/note";
     }
 
     @GetMapping("/note")
-    public String note() {
-        if (VarStore.userId == -1)
-            return "redirect:/sign_in";
+    public String note(HttpServletRequest request) {
+       if (!VarStore.verifySessionExist(request))
+           return "redirect:/sign_in";
         return "View_note";
     }
 
     @PostMapping("/submit_note_checkbox")
-    public String submit_checkbox(@RequestParam("option[]") List<String> option) {
-        if (VarStore.userId == -1)
-            return "redirect:sign_in";
+    public String submit_checkbox(@RequestParam("option[]") List<String> option,HttpServletRequest request) {
+       if (!VarStore.verifySessionExist(request))
+           return "redirect:/sign_in";
         if (option.size()==1) {
             for (int j = 0; j < VarStore.checkOptions.size(); j++) {
                 if (VarStore.checkOptions.get(j).getChecked())
@@ -87,30 +88,31 @@ public class NoteControler {
                 }
             }
         }
-        return "redirect:/";
+        return "redirect:/home";
     }
 
     @GetMapping("/edit_note")
-    public String edit_note() {
-        if (VarStore.userId == -1)
-            return "redirect:sign_in";
-        VarStore.editNote = true;
+    public String edit_note(HttpServletRequest request,HttpSession session) {
+       if (!VarStore.verifySessionExist(request))
+           return "redirect:/sign_in";
+        session.setAttribute("editNote",true);
         return "Add_note";
     }
 
     @PostMapping("/edit_note_submit")
-    public String edit_note_submit(HttpServletRequest request, @RequestParam("option[]") List<String> option) {
-        if (VarStore.userId == -1)
-            return "redirect:sign_in";
+    public String edit_note_submit(HttpServletRequest request, @RequestParam("option[]") List<String> option,HttpSession session) {
+       if (!VarStore.verifySessionExist(request))
+           return "redirect:/sign_in";
 
         String title = request.getParameter("title");
         String content = request.getParameter("content");
 
-        noteS.updateById(VarStore.noteId,title,content);
+        noteS.updateById((Long) session.getAttribute("noteId"),title,content);
 
         for(int i=0;i<VarStore.checkOptions.size();i++) {
             Boolean delete = true;
             for (int j = 0; j < option.size(); j++) {
+
                 if (option.get(j).equals(VarStore.checkOptions.get(i).getOption()))
                     delete = false;
             }
@@ -120,15 +122,26 @@ public class NoteControler {
 
         for (int j = 0; j < option.size(); j++) {
             Boolean insert = true;
+            int l = VarStore.checkOptions.size();
             for(int i=0;i<VarStore.checkOptions.size();i++) {
                 if (option.get(j).equals(VarStore.checkOptions.get(i).getOption()))
                     insert=false;
             }
-            if (insert)
-                optionS.save(new CheckOption(VarStore.noteId,option.get(j),false));
+            if (insert && !option.get(j).isEmpty())
+                optionS.save(new CheckOption((Long) session.getAttribute("noteId"),option.get(j),false));
         }
         VarStore.allNote = noteS.getAll();
-        VarStore.checkOptions = optionS.selectByNoteId(VarStore.noteId);
+        VarStore.checkOptions = optionS.selectByNoteId((Long) session.getAttribute("noteId"));
         return "redirect:/note";
+    }
+
+    @GetMapping("/delete_note")
+    public String delete_note(HttpServletRequest request,HttpSession session) {
+        if (!VarStore.verifySessionExist(request))
+            return "redirect:/sign_in";
+
+        optionS.deleteByNoteId((Long) session.getAttribute("noteId"));
+        noteS.deleteNotaById((Long) session.getAttribute("noteId"));
+        return "redirect:/home";
     }
 }

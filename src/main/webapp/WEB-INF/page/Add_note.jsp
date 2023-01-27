@@ -13,7 +13,7 @@
 <body>
 <jsp:include page="element/Navbar.jsp"></jsp:include>
 <div class="mt-3 mx-5">
-    <% if(VarStore.editNote){ %>
+    <% if((Boolean) session.getAttribute("editNote")) { %>
         <div class="mt-3">
             <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#Delete_note"><i class="bi bi-trash -fill me-2"></i>Sterge nota</button>
         </div>
@@ -22,11 +22,11 @@
         String title="";
         String content="";
         String link = "add_note_submit";
-        if(VarStore.editNote){
-            title = VarStore.allNote.get(VarStore.noteIndex).getTitle();
-            content = VarStore.allNote.get(VarStore.noteIndex).getContent();
+        if((Boolean) session.getAttribute("editNote")){
+
+            title = VarStore.allNote.get((Integer) session.getAttribute("noteIndex")).getTitle();
+            content = VarStore.allNote.get((Integer) session.getAttribute("noteIndex")).getContent();
             link = "edit_note_submit";
-            System.out.println(content);
             x=VarStore.checkOptions.size();
         } %>
     <form action="<%=link%>" method="post">
@@ -42,8 +42,10 @@
             <button class="btn btn btn-outline-dark add_checklist "><i class="bi bi-ui-checks me-2"></i>Caseta de selectare</button>
         </div>
         <div class="input_fields mt-3">
-            <% if(VarStore.editNote){
-                for(int i=0;i<VarStore.checkOptions.size();i++){ %>
+            <div hidden ><input name="option[]" value=""/></div>
+            <% if((Boolean) session.getAttribute("editNote")){
+                for(int i=0;i<VarStore.checkOptions.size();i++){
+                    if(VarStore.checkOptions.get(i).getNoteId().equals(session.getAttribute("noteId"))) {%>
             <div class="input-group mt-3">
                 <input type="text" class="form-control" id="option" name="option[]" value="<%=VarStore.checkOptions.get(i).getOption()%>"/>
                 <span class="input-group-text remove_field">
@@ -52,7 +54,7 @@
                     </a>
                 </span>
             </div>
-            <% } } %>
+            <% } } } %>
         </div>
         <div class="mt-3">
             <button class="btn btn-outline-dark add_field_button"><i class="bi bi-plus-circle me-2"></i>Adaugă opțiune</button>
@@ -79,7 +81,7 @@
                 </div>
                 <div class="d-flex justify-content-around">
                     <div class="d-grid gap-1 col-4">
-                        <a href="delete_account" class="btn btn-danger">Da</a>
+                        <a href="delete_note" class="btn btn-danger">Da</a>
                     </div>
                     <div class="d-grid gap-1 col-4">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" data-bs-target="#Delete_note">Nu</button>

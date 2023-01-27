@@ -11,6 +11,7 @@ import java.util.List;
 
 @Repository
 public interface CheckOptionRepository extends JpaRepository<CheckOption, Long> {
+    long deleteByNoteId(Long noteId);
     @Transactional
     @Modifying
     @Query("update CheckOption c set c.checked = ?1 where c.id = ?2")

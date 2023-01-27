@@ -25,7 +25,7 @@
         <a href="add_note" class="btn btn-dark" role="button"><i class="bi bi-plus-circle me-2"></i>Nota noua</a>
         <div class="row">
             <% for(int i=0;i< VarStore.allNote.size();i++){
-                if(VarStore.allNote.get(i).getUserId().equals(VarStore.userId)){ %>
+                if(VarStore.allNote.get(i).getUserId().equals((Long) session.getAttribute("userId"))){ %>
                 <% String link = "note/" + i; %>
                 <div class="col-md-4 mt-3">
                     <a href=<%=link%>>
@@ -34,8 +34,7 @@
                                 <%=VarStore.allNote.get(i).getTitle()%>
                             </div>
                             <div class="card-body">
-                                <% System.out.println(VarStore.allNote.get(i).getContent().length());
-                                    if (VarStore.allNote.get(i).getContent().length()<=50) { %>
+                                <% if (VarStore.allNote.get(i).getContent().length()<=50) { %>
                                     <p class="card-text"><%=VarStore.allNote.get(i).getContent()%></p>
                                 <% } else { %>
                                     <p class="card-text"><%=VarStore.allNote.get(i).getContent().substring(0,48) + "..."%></p>

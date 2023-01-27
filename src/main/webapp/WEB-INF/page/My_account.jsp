@@ -16,8 +16,10 @@
         <div class="card">
             <div class="card-body">
                 <h4 class="card-title">Date personale</h4>
-                <h5><b>Nume:</b> <%=VarStore.allUsers.get(VarStore.myUserIndex).getName()%></h5>
-                <h5><b >Email:</b> <%=VarStore.allUsers.get(VarStore.myUserIndex).getEmail()%></h5>
+                <% int index = (int) session.getAttribute("myUserIndex");
+                    String name = VarStore.allUsers.get(index).getName(); %>
+                <h5><b>Nume:</b> <%=name%></h5>
+                <h5><b >Email:</b> <%=VarStore.allUsers.get(index).getEmail()%></h5>
                 <div class="d-grid mt-3">
                     <button type="button" class="btn btn-dark btn-block" data-bs-toggle="modal" data-bs-target="#Edit_profile_data">Editeză datele</button>
                 </div>
@@ -45,12 +47,12 @@
                     <form action="edit_user_data" class="needs-validation" method="post" novalidate>
                         <div class="mb-3">
                             <label for="name">Nume:</label>
-                            <input type="text" class="form-control" id="name" name="name" value="<%=VarStore.allUsers.get(VarStore.myUserIndex).getName()%>" onClick="this.select();" required>
+                            <input type="text" class="form-control" id="name" name="name" value="<%=VarStore.allUsers.get(index).getName()%>" onClick="this.select();" required>
                             <div class="invalid-feedback">Introduceți numele</div>
                         </div>
                         <div class="mb-3">
                             <label for="email">Email:</label>
-                            <input type="email" class="form-control" id="email" name="email" value="<%=VarStore.allUsers.get(VarStore.myUserIndex).getEmail()%>" onClick="this.select();" required>
+                            <input type="email" class="form-control" id="email" name="email" value="<%=VarStore.allUsers.get(index).getEmail()%>" onClick="this.select();" required>
                             <div class="invalid-feedback">Introduceți email-ul</div>
                         </div>
                         <div class="d-grid">
@@ -132,7 +134,7 @@
 </html>
 
 <script type="text/javascript">//form verification
-var correct_old_password=<%=VarStore.allUsers.get(VarStore.myUserIndex).getPassword()%>;
+var correct_old_password=<%=VarStore.allUsers.get(index).getPassword()%>;
 var old_password=document.getElementById("old_password");
 var new_password1=document.getElementById("new_password1");
 var new_password2=document.getElementById("new_password2");

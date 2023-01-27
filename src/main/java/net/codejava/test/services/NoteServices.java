@@ -1,5 +1,6 @@
 package net.codejava.test.services;
 
+import jakarta.transaction.Transactional;
 import net.codejava.test.model.Note;
 import net.codejava.test.repository.NoteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,5 +23,10 @@ public class NoteServices {
 
     public void updateById(Long id,String title, String content){
         noteRepository.updateTitleAndContentById(title,content,id);
+    }
+
+    @Transactional
+    public void deleteNotaById(Long id){
+        noteRepository.deleteById(id);
     }
 }

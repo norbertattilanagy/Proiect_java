@@ -18,11 +18,14 @@
     <div class="my-3">
         <a href="edit_note" class="btn btn-outline-secondary btn-sm">Editeaza</a>
     </div>
-    <h4><%=VarStore.allNote.get(VarStore.noteIndex).getTitle()%></h4>
-    <p style="white-space: pre-wrap;"><%=VarStore.allNote.get(VarStore.noteIndex).getContent()%></p>
+    <h4><%=VarStore.allNote.get((Integer) session.getAttribute("noteIndex")).getTitle()%></h4>
+    <p style="white-space: pre-wrap;"><%=VarStore.allNote.get((Integer) session.getAttribute("noteIndex")).getContent()%></p>
     <form action="submit_note_checkbox" id="checkform" name="checkform" method="post">
         <div class="ms-3">
-            <% for(int i=0;i<VarStore.checkOptions.size();i++){ %>
+            <% Boolean isSaveBtn = false;
+                for(int i=0;i<VarStore.checkOptions.size();i++){
+                if(VarStore.checkOptions.get(i).getNoteId().equals(session.getAttribute("noteId"))){
+                    isSaveBtn = true; %>
                 <div class="form-check">
                     <input class="form-check-input" type="checkbox" value="" id="option" name="option[]" checked hidden>
                     <% if(VarStore.checkOptions.get(i).getChecked()){ %>
@@ -34,11 +37,13 @@
                         <%=VarStore.checkOptions.get(i).getOption()%>
                     </label>
                 </div>
-            <% } %>
+            <% } } %>
         </div>
-        <div class="mt-3">
-            <button type="submit" class="btn btn-outline-secondary btn-sm">Salveaza</button>
-        </div>
+        <% if(isSaveBtn){ %>
+            <div class="mt-3">
+                <button type="submit" class="btn btn-outline-secondary btn-sm">Salveaza</button>
+            </div>
+        <% } %>
     </form>
 
 </div>

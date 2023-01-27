@@ -1,5 +1,6 @@
 package net.codejava.test.services;
 
+import jakarta.transaction.Transactional;
 import net.codejava.test.model.CheckOption;
 import net.codejava.test.repository.CheckOptionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,5 +30,10 @@ public class CheckOptionServices {
 
     public void deleteById(Long id){
         checkOptionRepository.deleteById(id);
+    }
+
+    @Transactional
+    public void deleteByNoteId(Long id){
+        checkOptionRepository.deleteByNoteId(id);
     }
 }

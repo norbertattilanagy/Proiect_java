@@ -30,7 +30,7 @@
             </div>
             <div class="mb-3">
                 <label for="password1">Parola:</label>
-                <input type="password" class="form-control" id="password1" placeholder="Parola" name="password1" th:name="@{password}" data-bs-toggle="popover" data-bs-trigger="focus" title="The password must contain at least:" data-bs-content="6 characters, one uppercase, one lowercase, one number" required>
+                <input type="password" class="form-control" id="password1" placeholder="Parola" name="password1" th:name="@{password}" data-bs-toggle="popover" data-bs-trigger="focus" title="Parola trebuie să conțină cel puțin:" data-bs-content="6 caractere, o literă mare, o literă mică, un număr" required>
                 <div class="invalid-feedback password1"><p id="p1">Introduceti parola</p></div>
             </div>
             <div class="mb-3">
@@ -43,7 +43,7 @@
                 <button type="submit" class="btn btn-dark btn-block">Creare cont</button>
             </div>
             <div class="text-center">
-                <p><br><a href="/">Autentificare</a></p>
+                <p><br><a href="/home">Autentificare</a></p>
             </div>
         </form>
     </div>

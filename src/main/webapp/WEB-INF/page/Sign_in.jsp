@@ -12,14 +12,15 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
-<% if (!VarStore.incorectSignIn){ %>
+<% if (VarStore.verifySessionExist(request)){
+    if ((Boolean) session.getAttribute("incorectSignIn")){ %>
     <div class="alert alert-danger" role="alert">
         <div class="d-flex justify-content-center">
             <i class="bi bi-exclamation-triangle-fill me-2"></i>
             Email sau parola invalida
         </div>
     </div>
-<% } VarStore.incorectSignIn=false; %>
+<%    } session.setAttribute("incorectSignIn",false); } %>
 <div class="col-lg-4 col-md-3"></div>
 <div class="container my-3 col-lg-4 col-md-6">
     <div class="row d-flex justify-content-center align-items-center">

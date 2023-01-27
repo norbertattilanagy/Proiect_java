@@ -1,6 +1,7 @@
 package net.codejava.test.controler;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import net.codejava.test.VarStore;
 import net.codejava.test.model.User;
 import net.codejava.test.services.UserServices;
@@ -21,21 +22,23 @@ public class UserControler {
     }
 
     @PostMapping("/sign_in_submit")
-    public String sign_in_submit(HttpServletRequest request) {
+    public String sign_in_submit(HttpServletRequest request, HttpSession session) {
         String email = request.getParameter("email");
         String password = request.getParameter("password");
 
         VarStore.allUsers = userS.getAll();
         for (int i = 0; i < VarStore.allUsers.size(); i++) {
             if (email.equals(VarStore.allUsers.get(i).getEmail()) && password.equals(VarStore.allUsers.get(i).getPassword())) {
-                VarStore.userId = VarStore.allUsers.get(i).getId();
-                //userServices.updateAdmin(VarStore.userId,true);
-                VarStore.userAdmin = VarStore.allUsers.get(i).getAdmin();
-                VarStore.myUserIndex = i;
-                return "redirect:/";
+                session.setAttribute("userId",VarStore.allUsers.get(i).getId());
+                Long a = (Long) session.getAttribute("userId");
+                session.setAttribute("userAdmin",VarStore.allUsers.get(i).getAdmin());
+                session.setAttribute("myUserIndex",i);
+                System.out.println(session.getAttribute("myUserIndex"));
+                session.setAttribute("userSearch","");
+                return "redirect:/home";
             }
         }
-        VarStore.incorectSignIn = false;
+        session.setAttribute("incorectSignIn",true);
         return "redirect:/sign_in";
     }
 
@@ -45,77 +48,77 @@ public class UserControler {
     }
 
     @PostMapping("/create_account_submit")
-    public String create_account_submit(HttpServletRequest request) {
+    public String create_account_submit(HttpServletRequest request,HttpSession session) {
         String name = request.getParameter("name");
         String email = request.getParameter("email");
         String password = request.getParameter("password1");
 
-        VarStore.userId = userS.save(new User(name, email, password,false));
-        VarStore.userAdmin = false;
+        session.setAttribute("userId",userS.save(new User(name, email, password,false)));
+        session.setAttribute("userAdmin",false);
 
-        return "redirect:/";
+        return "redirect:/home";
     }
 
     @PostMapping("/search_users")
-    public String search_users(HttpServletRequest request){
-        if (VarStore.userId == -1)
-            return "redirect:sign_in";
-
-        VarStore.userSearch = request.getParameter("search");
+    public String search_users(HttpServletRequest request,HttpSession session){
+       if (!VarStore.verifySessionExist(request))
+           return "redirect:/sign_in";
+        session.setAttribute("userSearch",request.getParameter("search"));
         return "redirect:/users";
     }
 
     @GetMapping("/my_account")
-    public String my_account() {
-        if (VarStore.userId == -1)
-            return "redirect:sign_in";
+    public String my_account(HttpServletRequest request) {
+       if (!VarStore.verifySessionExist(request))
+           return "redirect:/sign_in";
 
         return "My_account";
     }
 
     @PostMapping("/edit_user_data")
-    public String edit_user_data(HttpServletRequest request) {
-        if (VarStore.userId == -1)
-            return "redirect:sign_in";
+    public String edit_user_data(HttpServletRequest request,HttpSession session) {
+       if (!VarStore.verifySessionExist(request))
+           return "redirect:/sign_in";
 
         String name = request.getParameter("name");
         String email = request.getParameter("email");
-        userS.updateDate(VarStore.userId,name,email);
+        userS.updateDate((Long) session.getAttribute("userId"),name,email);
         VarStore.allUsers = userS.getAll();
 
         return "redirect:/my_account";
     }
 
     @PostMapping("/edit_user_password")
-    public String edit_user_password(HttpServletRequest request) {
-        if (VarStore.userId == -1)
-            return "redirect:sign_in";
+    public String edit_user_password(HttpServletRequest request,HttpSession session) {
+       if (!VarStore.verifySessionExist(request))
+           return "redirect:/sign_in";
 
         String password = request.getParameter("new_password1");
-        userS.updatePassword(VarStore.userId,password);
+        userS.updatePassword((Long) session.getAttribute("userId"),password);
         VarStore.allUsers = userS.getAll();
 
         return "redirect:/my_account";
     }
 
     @GetMapping("/delete_account")
-    public String delete_account(){
-        userS.deleteUser(VarStore.userId);
-        return "redirect:sign_in";
+    public String delete_account(HttpSession session){
+        userS.deleteUser((Long) session.getAttribute("userId"));
+       return "redirect:/sign_in";
     }
 
     @GetMapping("/log_out")
-    public String log_out(){
-        VarStore.userId= Long.valueOf(-1);
-        VarStore.userAdmin = false;
+    public String log_out(HttpServletRequest request){
+       if (!VarStore.verifySessionExist(request))
+           return "redirect:/sign_in";
+        request.getSession().invalidate();
         VarStore.allUsers.clear();
-        return "redirect:sign_in";
+       return "redirect:/sign_in";
     }
 
     @GetMapping("/admin_user/{id}")
-    public String note_id(@PathVariable("id") int index) {
-        if (VarStore.userId == -1)
-            return "redirect:/sign_in";
+    public String note_id(@PathVariable("id") int index,HttpServletRequest request) {
+       if (!VarStore.verifySessionExist(request))
+           return "redirect:/sign_in";
 
         Long userId = VarStore.allUsers.get(index).getId();
         if(VarStore.allUsers.get(index).getAdmin())

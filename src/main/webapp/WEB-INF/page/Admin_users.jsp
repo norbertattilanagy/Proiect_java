@@ -19,7 +19,7 @@
     <form action="search_users" method="post">
         <div class="input-group">
             <input class="form-control me-2" id="search" name="search" type="search" placeholder="Cautare"
-                   value="<%=VarStore.userSearch%>" aria-label="Search">
+                   value="<%=(String) session.getAttribute("userSearch")%>" aria-label="Search">
             <button type="submit" class="input-group-text btn-primary"><i class="bi bi-search me-2"></i> Cautare
             </button>
         </div>
@@ -34,8 +34,9 @@
         </tr>
         </thead>
         <tbody>
-        <% for (int i = 0; i < VarStore.allUsers.size(); i++) {
-            if (VarStore.allUsers.get(i).getName().contains(VarStore.userSearch) || VarStore.allUsers.get(i).getEmail().contains(VarStore.userSearch)) { %>
+        <% String search = (String) session.getAttribute("userSearch");
+            for (int i = 0; i < VarStore.allUsers.size(); i++) {
+            if (VarStore.allUsers.get(i).getName().contains(search) || VarStore.allUsers.get(i).getEmail().contains(search  )) { %>
         <tr>
             <% String link = "admin_user/" + i; %>
             <th scope="row"><%=i + 1%></th>
