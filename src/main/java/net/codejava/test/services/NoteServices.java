@@ -15,8 +15,6 @@ public class NoteServices {
 
     public List<Note> getAll(){ return noteRepository.findAll(); }
 
-    public Optional<Note> FindById(Long id){ return noteRepository.findById(id); }
-
     public long save(Note note){
         noteRepository.save(note);
         return note.getId();

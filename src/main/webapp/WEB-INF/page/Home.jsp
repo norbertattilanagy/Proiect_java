@@ -24,7 +24,8 @@
     <div class="mt-3 mx-5">
         <a href="add_note" class="btn btn-dark" role="button"><i class="bi bi-plus-circle me-2"></i>Nota noua</a>
         <div class="row">
-            <% for(int i=0;i< VarStore.allNote.size();i++){ %>
+            <% for(int i=0;i< VarStore.allNote.size();i++){
+                if(VarStore.allNote.get(i).getUserId().equals(VarStore.userId)){ %>
                 <% String link = "note/" + i; %>
                 <div class="col-md-4 mt-3">
                     <a href=<%=link%>>
@@ -43,7 +44,7 @@
                         </div>
                     </a>
                 </div>
-            <% } %>
+            <% } } %>
         </div>
     </div>
 </body>
