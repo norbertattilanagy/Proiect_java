@@ -4,9 +4,6 @@
         <a class="navbar-brand" href="/">Notepad</a>
         <div class="collapse navbar-collapse" id="navbar">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="#">Home</a>
-                </li>
             </ul>
             <ul class="navbar-nav justify-content-end">
                 <% if (VarStore.userAdmin){ %>

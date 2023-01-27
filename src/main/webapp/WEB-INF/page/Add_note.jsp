@@ -18,6 +18,7 @@
             <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#Delete_note"><i class="bi bi-trash -fill me-2"></i>Sterge nota</button>
         </div>
     <% }
+        int x=0;
         String title="";
         String content="";
         String link = "add_note_submit";
@@ -26,6 +27,7 @@
             content = VarStore.allNote.get(VarStore.noteIndex).getContent();
             link = "edit_note_submit";
             System.out.println(content);
+            x=VarStore.checkOptions.size();
         } %>
     <form action="<%=link%>" method="post">
         <div class="mt-3">
@@ -93,7 +95,7 @@
 </html>
 <script type="text/javascript">
     $(document).ready(function() {
-        var x=<%=VarStore.checkOptions.size()%>;
+        var x=<%=x%>;
         var min_fields=1;
         var wrapper=$(".input_fields");
         var add_button=$(".add_field_button");

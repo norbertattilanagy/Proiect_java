@@ -14,6 +14,7 @@ public class HomeControler {
 
     @GetMapping("/")
     public String home() {
+        VarStore.incorectSignIn = true;
         if (VarStore.userId == -1)
             return "redirect:sign_in";
 

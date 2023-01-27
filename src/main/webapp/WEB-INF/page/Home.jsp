@@ -34,10 +34,10 @@
                             </div>
                             <div class="card-body">
                                 <% System.out.println(VarStore.allNote.get(i).getContent().length());
-                                    if (VarStore.allNote.get(i).getContent().length()<=35) { %>
+                                    if (VarStore.allNote.get(i).getContent().length()<=50) { %>
                                     <p class="card-text"><%=VarStore.allNote.get(i).getContent()%></p>
                                 <% } else { %>
-                                    <p class="card-text"><%=VarStore.allNote.get(i).getContent().substring(0,33) + "..."%></p>
+                                    <p class="card-text"><%=VarStore.allNote.get(i).getContent().substring(0,48) + "..."%></p>
                                 <% } %>
                             </div>
                         </div>

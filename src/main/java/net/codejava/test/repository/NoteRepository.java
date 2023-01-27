@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Repository
 public interface NoteRepository extends JpaRepository<Note, Long> {
+    Note findByUserId(Long userId);
     @Transactional
     @Modifying
     @Query("update Note n set n.title = ?1, n.content = ?2 where n.id = ?3")

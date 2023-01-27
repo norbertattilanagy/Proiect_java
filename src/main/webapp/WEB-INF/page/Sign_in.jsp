@@ -16,22 +16,24 @@
     <div class="alert alert-danger" role="alert">
         <div class="d-flex justify-content-center">
             <i class="bi bi-exclamation-triangle-fill me-2"></i>
-            Email sau parola invalid
+            Email sau parola invalida
         </div>
     </div>
 <% } VarStore.incorectSignIn=false; %>
 <div class="col-lg-4 col-md-3"></div>
 <div class="container my-3 col-lg-4 col-md-6">
     <div class="row d-flex justify-content-center align-items-center">
-        <h1 style="text-align: center">Sign in</h1>
-        <form action="sign_in_submit" class="needs-validation" name="sign_in" method="post">
+        <h1 style="text-align: center">Autentificare</h1>
+        <form action="sign_in_submit" class="needs-validation" name="sign_in" method="post" novalidate>
             <div class="mb-3 mt-3">
                 <label for="email">Email:</label>
-                <input type="email" class="form-control" placeholder="Email" name="email" id="email">
+                <input type="email" class="form-control" placeholder="Email" name="email" id="email" required>
+                <div class="invalid-feedback">Introduceti adresa de Email</div>
             </div>
             <div class="mb-3 mt-3">
-                <label for="password">Password:</label>
-                <input type="password" class="form-control" placeholder="Password" name="password" id="password">
+                <label for="password">Parola:</label>
+                <input type="password" class="form-control" placeholder="Parola" name="password" id="password" required>
+                <div class="invalid-feedback password">Introduceti parola</div>
             </div>
             <div class="form-check mb-3">
                 <label class="form-check-label">
@@ -42,7 +44,7 @@
                 <button type="submit" class="btn btn-dark btn-block">Autentificare</button>
             </div>
             <div class="text-center">
-                <br><a href="create_account">Create account</a>
+                <br><a href="create_account">Creare cont</a>
             </div>
         </form>
     </div>
@@ -55,6 +57,23 @@
                 x.type = "password";
             }
         }
+    </script>
+    <script>
+        (function () {
+            var forms = document.querySelectorAll('.needs-validation')
+            Array.prototype.slice.call(forms).forEach(function (form) {
+
+                form.addEventListener('submit', function (event)
+                {
+                    if (!form.checkValidity())
+                    {
+                        event.preventDefault()
+                        event.stopPropagation()
+                    }
+                    form.classList.add('was-validated')
+                }, false)
+            })
+        })()
     </script>
 </div>
 </body>

@@ -16,34 +16,34 @@
 <div class="col-lg-4 col-md-3"></div>
 <div class="container my-3 col-lg-4 col-md-6">
     <div class="row d-flex justify-content-center align-items-center">
-        <h1 class="text-center"><br>Create account</h1>
+        <h1 class="text-center"><br>Creare cont</h1>
         <form action="create_account_submit" class="needs-validation" method="post" novalidate>
             <div class="mb-3">
-                <label for="name">Name:</label>
-                <input type="text" class="form-control" id="name" placeholder="Name" name="name" required>
-                <div class="invalid-feedback">Enter the name</div>
+                <label for="name">Nume:</label>
+                <input type="text" class="form-control" id="name" placeholder="Nume" name="name" required>
+                <div class="invalid-feedback">Introduceti numele</div>
             </div>
             <div class="mb-3">
                 <label for="email">Email:</label>
                 <input type="email" class="form-control" id="email" placeholder="Email" name="email" required>
-                <div class="invalid-feedback">Enter email address</div>
+                <div class="invalid-feedback">Introduceti adresa de email</div>
             </div>
             <div class="mb-3">
-                <label for="password1">Password:</label>
-                <input type="password" class="form-control" id="password1" placeholder="Password" name="password1" th:name="@{password}" data-bs-toggle="popover" data-bs-trigger="focus" title="The password must contain at least:" data-bs-content="6 characters, one uppercase, one lowercase, one number" required>
-                <div class="invalid-feedback password1"><p id="p1">Enter password</p></div>
+                <label for="password1">Parola:</label>
+                <input type="password" class="form-control" id="password1" placeholder="Parola" name="password1" th:name="@{password}" data-bs-toggle="popover" data-bs-trigger="focus" title="The password must contain at least:" data-bs-content="6 characters, one uppercase, one lowercase, one number" required>
+                <div class="invalid-feedback password1"><p id="p1">Introduceti parola</p></div>
             </div>
             <div class="mb-3">
-                <label for="password2">Confirm password:</label>
-                <input type="password" class="form-control" id="password2" placeholder="Confirm password" name="password2" required>
-                <div class="invalid-feedback password2"><p id="p2">Enter password</p></div>
+                <label for="password2">Confirmare parola:</label>
+                <input type="password" class="form-control" id="password2" placeholder="Confirmare parola" name="password2" required>
+                <div class="invalid-feedback password2"><p id="p2">Introduceti parola</p></div>
             </div>
             <div class="d-grid">
                 <br>
-                <button type="submit" class="btn btn-dark btn-block">Create account</button>
+                <button type="submit" class="btn btn-dark btn-block">Creare cont</button>
             </div>
             <div class="text-center">
-                <p><br><a href="/">Sign in</a></p>
+                <p><br><a href="/">Autentificare</a></p>
             </div>
         </form>
     </div>

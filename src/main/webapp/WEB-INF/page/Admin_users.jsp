@@ -1,8 +1,3 @@
-<%@ page import="net.codejava.test.model.User" %>
-<%@ page import="java.util.List" %>
-<%@ page import="org.springframework.beans.factory.annotation.Autowired" %>
-<%@ page import="net.codejava.test.services.UserServices" %>
-<%@ page import="net.codejava.test.controler.UserControler" %>
 <%@ page import="net.codejava.test.VarStore" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
